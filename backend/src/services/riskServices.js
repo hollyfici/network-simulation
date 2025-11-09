@@ -111,3 +111,11 @@ export async function getHistory(zoneName) {
     // Stub: could store time-series here later
     return [{ timestamp: Date.now(), stormIntensity: storm.intensity }];
 }
+
+export async function setStormIntensity(value) {
+    storm.intensity = clamp(value, 0, 1);
+    storm.trend = 0;
+    storm.time = 0;
+    return { message: `Storm intensity set to ${storm.intensity}` };
+}
+
