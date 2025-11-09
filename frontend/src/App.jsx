@@ -6,7 +6,7 @@ function App() {
     const { error, clearError } = useZoneData()
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+        <div className="min-h-screen bg-gray-950 text-gray-100">
             {error && (
                 <AlertBanner
                     message={error}

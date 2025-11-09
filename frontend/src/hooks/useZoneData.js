@@ -45,6 +45,30 @@ export function useZoneData() {
         return () => clearInterval(interval);
     }, [isRunning]);
 
+    useEffect(() => {
+        if (!isRunning) return;
+
+        const interval = setInterval(() => {
+            setZones(prev =>
+                prev.map(zone => {
+                    const newHealth = Math.max(0, (zone.networkHealth ?? 100) - stormIntensity * 10);
+                    return {
+                        ...zone,
+                        networkHealth: newHealth,
+                        status:
+                            newHealth > 70
+                                ? "OK"
+                                : newHealth > 40
+                                    ? "Degrading"
+                                    : "Degraded",
+                    };
+                })
+            );
+        }, 1000);
+
+        return () => clearInterval(interval);
+    }, [isRunning, stormIntensity]);
+
     const startSimulation = async () => {
         try {
             setIsLoading(true);
